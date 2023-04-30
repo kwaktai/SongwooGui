@@ -79,12 +79,9 @@ def search_listbox():
     search_query = search_entry.get().lower()
     listbox.delete(*listbox.get_children())
 
-    for _, row in product_codes_and_models.iterrows():
-        product_code = row['반제품코드']
-        model = row['Model']
-
-        if search_query in model.lower():
-            listbox.insert("", "end", values=(product_code, model))
+    filtered_rows = product_codes_and_models[product_codes_and_models['Model'].str.lower().str.contains(search_query)]
+    for _, row in filtered_rows.iterrows():
+        listbox.insert("", "end", values=(row['반제품코드'], row['Model']))
 
 
 def on_key_release(event):
@@ -92,13 +89,12 @@ def on_key_release(event):
         search_listbox()
 
 def add_selected_items():
-    selected_codes = [listbox.item(i, 'values')[1] for i in listbox.selection()]
-    for code in selected_codes:
-        selected_items_text.insert(tk.END, f"{code}\n")
-
+    selected_items = [listbox.item(i, 'values') for i in listbox.selection()]
+    for item in selected_items:
+        selected_items_text.insert(tk.END, f"{item[0]} - {item[1]}\n")
 
 def print_result():
-    selected_codes = selected_items_text.get('1.0', tk.END).split('\n')[:-1]
+    selected_codes = [item.split(" - ")[0] for item in selected_items_text.get('1.0', tk.END).split('\n')[:-1]]
     merge_query(selected_codes)
 
 root = tk.Tk()
@@ -121,7 +117,6 @@ search_entry.bind("<KeyRelease>", on_key_release)
 product_codes_and_models = get_selected_product_codes(conn)
 for _, row in product_codes_and_models.iterrows():
     listbox.insert("", "end", values=(row['반제품코드'], row['Model']))
-
 
 listbox.pack(pady=(10, 0))
 

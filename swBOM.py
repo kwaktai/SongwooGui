@@ -70,3 +70,16 @@ if __name__ == "__main__":
     file_path = "D:\OneDrive\SongwooDB\songwoo.accdb"
     conn = connect_to_db(file_path)
     select_product_codes(conn)
+
+
+
+
+
+         품목코드   Item_Name                         Model  8010-030  8010-037  8010-051  8010-072
+0    AMP-0001    IC-OPAMP                   KA358A/SOP8       0.0       1.0       0.0       0.0
+1    BAT-0016  BAT-BACKUP                CR2032/3PIN/ST       0.0       1.0       0.0       0.0
+
+
+          품목코드   Item_Name                         Model  PS-130S_MAIN_SN-100  MS-233_MAIN(SK)  EP-642_MAIN BOARD  ED-643N_MAIN
+0    AMP-0001    IC-OPAMP                   KA358A/SOP8       0.0       1.0       0.0       0.0
+1    BAT-0016  BAT-BACKUP                CR2032/3PIN/ST       0.0       1.0       0.0       0.0
